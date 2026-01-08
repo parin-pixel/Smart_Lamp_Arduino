@@ -1,0 +1,66 @@
+int ldrpin = A0;
+int ledpin = 12;
+int trigpin = 8;
+int echopin = 7;
+
+int ldrval;
+long tt;
+float dist;
+
+bool ledState = false;
+unsigned long ledOnTime = 0;
+
+void setup() {
+  pinMode(ldrpin, INPUT);
+  pinMode(ledpin, OUTPUT);
+  pinMode(trigpin, OUTPUT);
+  pinMode(echopin, INPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+
+  ldrval = analogRead(ldrpin);
+
+  
+  digitalWrite(trigpin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigpin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigpin, LOW);
+
+  tt = pulseIn(echopin, HIGH, 30000);
+  if (tt > 0) {
+    dist = tt * 0.017;
+  } else {
+    dist = 999; 
+  }
+
+  
+  Serial.print(dist);
+  Serial.print(",");
+  Serial.println(ldrval);
+
+  
+  if (ldrval > 1000 && dist < 30) {
+    ledState = true;
+    ledOnTime = millis();   
+  }
+
+  
+  if (ledState) {
+    digitalWrite(ledpin, HIGH);
+
+    if (millis() - ledOnTime >= 10000) {
+      if (!(ldrval > 1000 && dist < 30)) {
+        ledState = false;
+      } else {
+        ledOnTime = millis(); 
+      }
+    }
+  } else {
+    digitalWrite(ledpin, LOW);
+  }
+
+  delay(100); 
+}
