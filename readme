@@ -1,0 +1,13 @@
+A sensor which detects objects at a particular range and turns the led ON incase light is below threshhold otherwise led remains off.
+
+components used - hcsr04 sensor, led, resistors, LDR(light dependent resistor), arduino. 
+
+working of hcsr04 sensor - the sensor consists of four terminals - Vcc, trg, echo, gnd. the Vcc is connected to 5v supply and gnd to ground. It consits of a piezo material 
+and works on piezo electric effect. when current passed through the piezo material, electrical energy is converted to physical sound waves of frequency 40 kHZ. These signals
+when collide with obstacles are reflected back. This is how a sensor detects objects.
+
+working of LDR - it is a resistor whose value changes when light falls on it. electrons in valence band get energized when light of centain frequency falls on it. Hence, it
+is free from bound of nucleus and now can conduct electricity. thus resistance drops when light intensity increases.
+
+It is coded in such a way that when ldr reaches a certain value of resistance and object is detected in a particular range by sensor the led turns on for 10s to avoid continous
+flickering.
